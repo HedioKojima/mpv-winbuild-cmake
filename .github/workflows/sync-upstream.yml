@@ -1,8 +1,8 @@
 name: Sync upstream (rebase)
 
 on:
-  schedule:
-    - cron: "23 18 * * *"   # 每天 UTC 18:23 = 香港时间凌晨 2:23
+  #schedule:
+    #- cron: "23 18 * * *"   # 每天 UTC 18:23 = 香港时间凌晨 2:23
   workflow_dispatch: {}     # 允许在 Actions 页面手动触发
 
 # 用默认 GITHUB_TOKEN 推送。说明：本仓库唯一的本地提交内含本工作流文件，
