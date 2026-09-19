@@ -4,7 +4,6 @@ ExternalProject_Add(libass
         freetype2
         fribidi
         libiconv
-        fontconfig
         libunibreak
     GIT_REPOSITORY https://github.com/Andarwinux/libass.git
     SOURCE_DIR ${SOURCE_LOCATION}
@@ -19,7 +18,7 @@ ExternalProject_Add(libass
     CONFIGURE_COMMAND ${CMAKE_COMMAND} -E copy_directory <SOURCE_DIR> <BINARY_DIR>/source/${package}
     COMMAND ${EXEC} meson setup --reconfigure <BINARY_DIR>/build <BINARY_DIR>/source/${package}
         ${meson_conf_args}
-        -Dfontconfig=enabled
+        -Dfontconfig=disabled
         -Ddirectwrite=enabled
         -Dasm=enabled
         -Dlibunibreak=enabled

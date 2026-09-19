@@ -3,7 +3,6 @@ ExternalProject_Add(curl
         brotli
         c-ares
         libpsl
-        libssh
         ngtcp2
         nghttp2
         nghttp3
@@ -28,7 +27,7 @@ ExternalProject_Add(curl
         -DCURL_CA_NATIVE=ON
         -DCURL_BROTLI=ON
         -DCURL_USE_LIBPSL=ON
-        -DCURL_USE_LIBSSH=ON
+        -DCURL_USE_LIBSSH=OFF
         -DCURL_USE_LIBSSH2=OFF
         -DCURL_USE_OPENSSL=ON
         -DCURL_ZSTD=ON
@@ -52,7 +51,7 @@ ExternalProject_Add(curl
         -DCMAKE_UNITY_BUILD=ON
         -DUNITY_BUILD_BATCH_SIZE=0
         -DCMAKE_UNITY_BUILD_BATCH_SIZE=0
-        "-DCMAKE_C_FLAGS='-DNGHTTP3_STATICLIB -DNGHTTP2_STATICLIB -DNGTCP2_STATICLIB -lz -lbrotlienc -lbrotlidec -lbrotlicommon -lzstd -lcrypt32 -lsecur32 -include libssh/scp.h'"
+        "-DCMAKE_C_FLAGS='-DNGHTTP3_STATICLIB -DNGHTTP2_STATICLIB -DNGTCP2_STATICLIB -lz -lbrotlienc -lbrotlidec -lbrotlicommon -lzstd -lcrypt32 -lsecur32'"
     BUILD_ENVIRONMENT_MODIFICATION
         _PACKAGE_NAME=set:${package}
         _BINARY_DIR=set:<BINARY_DIR>

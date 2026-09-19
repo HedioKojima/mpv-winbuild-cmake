@@ -1,0 +1,59 @@
+name: Sync upstream (rebase)
+
+on:
+  schedule:
+    - cron: "23 18 * * *"   # 每天 UTC 18:23 = 香港时间凌晨 2:23
+  workflow_dispatch: {}     # 允许在 Actions 页面手动触发
+
+# 用默认 GITHUB_TOKEN 推送。说明：本仓库唯一的本地提交内含本工作流文件，
+# rebase 重放后该文件内容不变（远端新旧 tip 中为同一 blob），
+# 一般不会触发 GitHub 的 workflow 文件推送限制；
+# 若某次运行报 "refusing to allow ... workflow ..."，请在仓库 Secrets 里
+# 添加 SYNC_PAT（fine-grained：Contents RW + Workflows RW）即可。
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-upstream
+  cancel-in-progress: true
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: master
+          fetch-depth: 0
+          # 有 SYNC_PAT secret 则优先用（可触发其他 CI、可改 workflow 文件），否则用默认 GITHUB_TOKEN
+          token: ${{ secrets.SYNC_PAT || github.token }}
+
+      - name: Git config
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Fetch upstream
+        run: |
+          git remote add upstream https://github.com/Andarwinux/mpv-winbuild-cmake.git
+          git fetch upstream master --tags
+
+      - name: Rebase onto upstream/master
+        id: rb
+        run: |
+          if git rebase upstream/master; then
+            echo "ok=1" >> "$GITHUB_OUTPUT"
+          else
+            git rebase --abort
+            echo "ok=0" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Force push
+        if: steps.rb.outputs.ok == '1'
+        run: git push --force-with-lease origin master
+
+      - name: Fail loudly on conflict
+        if: steps.rb.outputs.ok == '0'
+        run: |
+          echo "::error::Rebase 有冲突，请在本地解决后手动 force push"
+          exit 1

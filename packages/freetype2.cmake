@@ -3,7 +3,6 @@ ExternalProject_Add(freetype2
         libpng
         zlib
         brotli
-        bzip2
         harfbuzz_init
     GIT_REPOSITORY https://github.com/freetype/freetype.git
     SOURCE_DIR ${SOURCE_LOCATION}
@@ -23,7 +22,7 @@ ExternalProject_Add(freetype2
         -Dmmap=enabled
         -Dbrotli=enabled
         -Dzlib=enabled
-        -Dbzip2=enabled
+        -Dbzip2=disabled
         -Dpng=enabled
     BUILD_ENVIRONMENT_MODIFICATION
         _PACKAGE_NAME=set:${package}

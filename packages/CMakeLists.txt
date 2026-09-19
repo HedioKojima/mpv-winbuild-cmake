@@ -3,29 +3,14 @@ include(${PROJECT_SOURCE_DIR}/cmake/packages_check.cmake)
 list(APPEND ep
     xz
     uchardet
-    libsamplerate
-    rubberband
     zlib
     zstd
-    bzip2
     libjpeg
     lcms2
-    ogg
-    vorbis
-    opus-dnn
-    opus
-    speex
-    libmodplug
-    libvpx
-    game-music-emu
     libpng
-    x265
-    libdvdcss
-    libdvdread
-    libdvdnav
     libiconv
     meson-wrap
-    lua5.2
+    luajit
     fribidi
     libxml2
     brotli
@@ -37,53 +22,28 @@ list(APPEND ep
     harfbuzz
     graphengine
     libzimg
-    fontconfig
     libunibreak
     libass
-    libvpl
-    amf-headers
-    avisynth-headers
     nvcodec-headers
-    libmysofa
-    aom
     xxhash
     dav1d
     libwebp
-    vapoursynth
     openssl
-    libssh
-    libsrt
     libarchive
     highway
     libjxl
-    angle-headers
-    mujs
     spirv-headers
     spirv-tools
     spirv-cross
     glslang
     vulkan-header
     vulkan
-    libsdl2
-    openal-soft
     shaderc
     glad
     fast_float
     svtav1
     libplacebo
-    libva
-    libaribcaption
-    libsixel
-    opencl-header
-    opencl
     fdk-aac
-    liblc3
-    libvidstab
-    frei0r
-    vvenc
-    codec2
-    ggml
-    whisper
     ngtcp2
     nghttp3
     nghttp2
@@ -92,20 +52,8 @@ list(APPEND ep
     curl
     ffmpeg
     mpv
-    mpv-debug-plugin
-    mpv-menu-plugin
     sqlite
-    zenlib
-    libmediainfo
-    mediainfo
     mimalloc
-    qt6-qtbase
-    qt6-qttools
-    qt6-qtsvg
-    boost
-    libtorrent
-    qbittorrent
-    mpc-qt
 )
 foreach(package IN LISTS ep)
     if(NOT ${SINGLE_SOURCE_LOCATION} STREQUAL "")
